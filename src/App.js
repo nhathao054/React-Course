@@ -24,6 +24,15 @@ class App extends React.Component {
   handleOnMoveOver(event) {
     console.log("Heyy");
   }
+  handleInput(event) {
+    this.setState({
+      name: event.target.value,
+    });
+  }
+  handleSubmit(event) {
+    console.log(this.state);
+    event.preventDefault();
+  }
 
   render() {
     return (
@@ -33,8 +42,11 @@ class App extends React.Component {
         <h1>
           Hello {this.state.name} in {this.state.address}
         </h1>
-
-        <button
+        <form onSubmit={(event) => this.handleSubmit(event)}>
+          <input onChange={(event) => this.handleInput(event)} />
+          <button>Submit</button>
+        </form>
+        {/* <button
           onClick={(event) => {
             this.handleClick(event);
           }}
@@ -47,7 +59,7 @@ class App extends React.Component {
           }}
         >
           havor me
-        </button>
+        </button> */}
       </div>
     );
   }
