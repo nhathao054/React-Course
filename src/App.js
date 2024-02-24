@@ -13,10 +13,15 @@ class App extends React.Component {
     age: 21,
   };
 
-  handleClick() {
+  handleClick(event) {
     console.log("you clicked me");
+    console.log(this.state.name);
+
+    this.setState({
+      name: "Hao nguyen",
+    });
   }
-  handleOnMoveOver() {
+  handleOnMoveOver(event) {
     console.log("Heyy");
   }
 
@@ -29,8 +34,20 @@ class App extends React.Component {
           Hello {this.state.name} in {this.state.address}
         </h1>
 
-        <button onClick={this.handleClick}>click me</button>
-        <button onMouseOver={this.handleOnMoveOver}>havor me</button>
+        <button
+          onClick={(event) => {
+            this.handleClick(event);
+          }}
+        >
+          click me
+        </button>
+        <button
+          onMouseOver={(event) => {
+            this.handleOnMoveOver(event);
+          }}
+        >
+          havor me
+        </button>
       </div>
     );
   }
