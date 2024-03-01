@@ -18,9 +18,9 @@ import {
   FaHeart,
 } from "react-icons/fa";
 import sidebarBg from "../../assets/bg2.jpg";
-
 import { DiReact } from "react-icons/di";
 import { MdDashboard } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 const SideBar = (props) => {
   const { image, collapsed, toggled, handleToggleSidebar } = props;
@@ -53,13 +53,25 @@ const SideBar = (props) => {
 
         <SidebarContent>
           <Menu iconShape="circle">
-            <MenuItem icon={<MdDashboard />}>Dash Board</MenuItem>
+            <MenuItem icon={<MdDashboard />}>
+              Dash Board
+              <Link to={"/admins"} />
+            </MenuItem>
           </Menu>
           <Menu iconShape="circle">
             <SubMenu icon={<FaGem />} title={"Feature"}>
-              <MenuItem> 1</MenuItem>
-              <MenuItem> 2</MenuItem>
-              <MenuItem> 3</MenuItem>
+              <MenuItem>
+                User Management
+                <Link to={"/admins/manage-user"} />
+              </MenuItem>
+              <MenuItem>
+                Quiz Management
+                <Link to={"/admins/manage-quiz"} />
+              </MenuItem>
+              <MenuItem>
+                Question Management
+                <Link to={"/admins/manage-question"} />
+              </MenuItem>
             </SubMenu>
           </Menu>
         </SidebarContent>
