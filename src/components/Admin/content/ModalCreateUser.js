@@ -7,6 +7,7 @@ import Row from "react-bootstrap/Row";
 import { FaPlusCircle } from "react-icons/fa";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { postCreateUser } from "../../../services/apiServices";
 
 const ModalCreateUser = (props) => {
   const { show, setShow } = props;
@@ -50,27 +51,22 @@ const ModalCreateUser = (props) => {
       toast.error("Invalid Email");
       return;
     }
+    if (!role) {
+      toast.error("Invalid Email");
+      return;
+    }
     if (!password) {
       toast.error("Invalid Password");
       return;
     }
 
-    const data = new FormData();
-    data.append("email", email);
-    data.append("password", password);
-    data.append("username", userName);
-    data.append("role", role);
-    data.append("userImage", image);
-
-    const res = await axios.post(
-      "http://localhost:8081/api/v1/participant",
-      data
-    );
-
-    if (res.data && res.data.EC === 0) {
-      toast.success(res.data.EM);
+    const data = await postCreateUser(email, password, userName, role, image);
+    if (data && data.EC === 0) {
+      toast.success(data.EM);
+      await props.fetchListUser();
+      handleClose();
     } else {
-      toast.error(res.data.EM);
+      toast.error(data.EM);
     }
   };
 
@@ -134,6 +130,7 @@ const ModalCreateUser = (props) => {
               <Form.Group as={Col} controlId="formRole">
                 <Form.Label>Role</Form.Label>
                 <Form.Select
+                  defaultValue={role}
                   onChange={(event) => {
                     setRole(event.target.value);
                   }}

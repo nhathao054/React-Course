@@ -1,10 +1,26 @@
 import ModalCreateUser from "./ModalCreateUser";
 import { FaPlusCircle } from "react-icons/fa";
 import "./ManageUser.scss";
-import { useState } from "react";
+import TableUser from "./TableUser";
+import { useEffect, useState } from "react";
+import { getListUser } from "../../../services/apiServices";
 
 const ManageUser = () => {
   const [showModalCreateUser, setShowModalCreateUser] = useState(false);
+  const [listUsers, setListUsers] = useState([]);
+
+  useEffect(() => {
+    fetchListUser();
+  }, []);
+
+  const fetchListUser = async () => {
+    const res = await getListUser();
+    if (res && res.EC === 0) {
+      setListUsers(res.DT);
+    } else {
+      console.log("list user not found");
+    }
+  };
 
   return (
     <div className="manage-user-container">
@@ -19,10 +35,13 @@ const ManageUser = () => {
             Add new user
           </button>
         </div>
-        <div className="table-users-container">table users</div>
+        <div className="table-users-container">
+          <TableUser listUsers={listUsers} />
+        </div>
         <ModalCreateUser
           show={showModalCreateUser}
           setShow={setShowModalCreateUser}
+          fetchListUser={fetchListUser}
         />
       </div>
     </div>

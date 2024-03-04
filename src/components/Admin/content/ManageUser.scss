@@ -3,7 +3,10 @@
   font-weight: 600;
   font-size: larger;
   .manage-user-content {
-    margin: 15px 0;
+    margin: 10px 10px;
+    .btn.btn-primary {
+      margin-bottom: 10px;
+    }
   }
 }
 
