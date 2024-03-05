@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Col from "react-bootstrap/Col";
@@ -7,10 +7,11 @@ import Row from "react-bootstrap/Row";
 import { FaPlusCircle } from "react-icons/fa";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { postCreateUser } from "../../../services/apiServices";
+import { putUpdateUser } from "../../../services/apiServices";
+import _ from "lodash";
 
-const ModalCreateUser = (props) => {
-  const { show, setShow } = props;
+const ModalUpdateUser = (props) => {
+  const { show, setShow, dataUpdate } = props;
   // const [show, setShow] = useState(false);
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
@@ -20,6 +21,19 @@ const ModalCreateUser = (props) => {
   const [previewImage, setPreviewImage] = useState("");
 
   //=====================function=========================================
+
+  useEffect(() => {
+    if (!_.isEmpty(dataUpdate)) {
+      setEmail(dataUpdate.email);
+      setUserName(dataUpdate.username);
+      setRole(dataUpdate.role);
+      setImage("");
+      if (dataUpdate.image) {
+        setPreviewImage(`data:image/jpeg;base64,${dataUpdate.image}`);
+      }
+    }
+  }, [dataUpdate]);
+
   const handleClose = () => {
     setShow(false);
     setEmail("");
@@ -27,8 +41,9 @@ const ModalCreateUser = (props) => {
     setUserName("");
     setRole("");
     setImage("");
+    props.setDataUpdate({});
   };
-  const handleShow = () => setShow(true);
+
   const handleUploadFile = (event) => {
     if (event.target && event.target.files && event.target.files[0]) {
       setPreviewImage(URL.createObjectURL(event.target.files[0]));
@@ -36,31 +51,8 @@ const ModalCreateUser = (props) => {
     }
   };
 
-  const validateEmail = (email) => {
-    return String(email)
-      .toLowerCase()
-      .match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      );
-  };
-
   const handleSubmitUser = async () => {
-    const isValidEmail = validateEmail(email);
-
-    if (!isValidEmail) {
-      toast.error("Invalid Email");
-      return;
-    }
-    if (!role) {
-      toast.error("Invalid Email");
-      return;
-    }
-    if (!password) {
-      toast.error("Invalid Password");
-      return;
-    }
-
-    const data = await postCreateUser(email, password, userName, role, image);
+    const data = await putUpdateUser(dataUpdate.id, userName, role, image);
     if (data && data.EC === 0) {
       toast.success(data.EM);
       await props.fetchListUser();
@@ -69,7 +61,6 @@ const ModalCreateUser = (props) => {
       toast.error(data.EM);
     }
   };
-
   //==========================render===============================
   return (
     <>
@@ -85,7 +76,7 @@ const ModalCreateUser = (props) => {
         backdrop="static"
       >
         <Modal.Header closeButton>
-          <Modal.Title>Add new user</Modal.Title>
+          <Modal.Title>Update a user</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -96,6 +87,7 @@ const ModalCreateUser = (props) => {
                   type="email"
                   placeholder="Enter email"
                   value={email}
+                  disabled
                   onChange={(event) => {
                     setEmail(event.target.value);
                   }}
@@ -108,6 +100,7 @@ const ModalCreateUser = (props) => {
                   type="password"
                   placeholder="Password"
                   value={password}
+                  disabled
                   onChange={(event) => {
                     setPassword(event.target.value);
                   }}
@@ -177,4 +170,4 @@ const ModalCreateUser = (props) => {
   );
 };
 
-export default ModalCreateUser;
+export default ModalUpdateUser;
