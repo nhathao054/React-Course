@@ -4,17 +4,21 @@ import { login } from "../../services/apiServices";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
+import { useDispatch } from "react-redux";
+import { doLogin } from "../../redux/action/userAction";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isShowPassword, setIsShowPassword] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogin = async () => {
     const res = await login(email, password);
     console.log(res);
     if (res && res.EC === 0) {
+      dispatch(doLogin(res));
       toast.success(res.EM);
       navigate("/");
     }

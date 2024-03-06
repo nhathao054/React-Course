@@ -1,6 +1,10 @@
+import { useSelector } from "react-redux";
 import homePageVideo from "../../assets/video-homepage.mp4";
 
 const HomePage = () => {
+  const account = useSelector((state) => state.user.account);
+  const isAthenticate = useSelector((state) => state.user.isAthenticate);
+
   return (
     <div className="homepage-container">
       <video autoPlay muted loop>
