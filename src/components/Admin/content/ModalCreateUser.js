@@ -52,7 +52,7 @@ const ModalCreateUser = (props) => {
       return;
     }
     if (!role) {
-      toast.error("Invalid Email");
+      toast.error("Invalid Role");
       return;
     }
     if (!password) {
@@ -83,6 +83,7 @@ const ModalCreateUser = (props) => {
         onHide={handleClose}
         size="xl"
         backdrop="static"
+        autocomplete="off"
       >
         <Modal.Header closeButton>
           <Modal.Title>Add new user</Modal.Title>
@@ -130,13 +131,12 @@ const ModalCreateUser = (props) => {
               <Form.Group as={Col} controlId="formRole">
                 <Form.Label>Role</Form.Label>
                 <Form.Select
-                  value={role}
                   onChange={(event) => {
                     setRole(event.target.value);
                   }}
                 >
-                  <option>USER</option>
-                  <option>ADMIN</option>
+                  <option value="USER">USER</option>
+                  <option value="ADIM">ADMIN</option>
                 </Form.Select>
               </Form.Group>
             </Row>

@@ -128,8 +128,8 @@ const ModalUpdateUser = (props) => {
                     setRole(event.target.value);
                   }}
                 >
-                  <option>USER</option>
-                  <option>ADMIN</option>
+                  <option value="USER">USER</option>
+                  <option value="ADMIN">ADMIN</option>
                 </Form.Select>
               </Form.Group>
             </Row>
