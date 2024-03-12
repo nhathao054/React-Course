@@ -47,7 +47,6 @@
     input {
       margin-bottom: 10px;
     }
-
     button {
       margin-top: 20px;
       line-height: 28px;
@@ -58,6 +57,28 @@
       color: white;
       background: black;
       width: 100%;
+
+      &:disabled {
+        background: #dddddd;
+        color: #afafaf;
+        cursor: no-drop;
+      }
+    }
+
+    .loading-icon {
+      color: #00d4ff;
+      margin-right: 7px;
+      top: 2px;
+      animation: spin 1s infinite linear;
+    }
+
+    @keyframes spin {
+      from {
+        transform: scale(1) rotate(0deg);
+      }
+      to {
+        transform: scale(1) rotate(360deg);
+      }
     }
 
     .pass-group {

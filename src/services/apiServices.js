@@ -34,11 +34,19 @@ const deleteUser = (id) => {
 };
 
 const login = (email, password) => {
-  return axios.post("api/v1/login", { email, password });
+  return axios.post("api/v1/login", { email, password, delay: 3000 });
 };
 
 const register = (email, password, username) => {
   return axios.post("api/v1/register", { email, password, username });
+};
+
+const getListQuiz = () => {
+  return axios.get("api/v1/quiz-by-participant");
+};
+
+const getQuizById = (id) => {
+  return axios.get(`api/v1/questions-by-quiz?quizId=${id}`);
 };
 
 export {
@@ -49,4 +57,6 @@ export {
   getListUserPatinate,
   login,
   register,
+  getListQuiz,
+  getQuizById,
 };

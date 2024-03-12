@@ -6,24 +6,31 @@ import { useNavigate } from "react-router-dom";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import { useDispatch } from "react-redux";
 import { doLogin } from "../../redux/action/userAction";
+import { ImSpinner } from "react-icons/im";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isShowPassword, setIsShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleLogin = async () => {
+    setIsLoading(true);
+
+    //====submit api=============
     const res = await login(email, password);
-    console.log(res);
     if (res && res.EC === 0) {
       dispatch(doLogin(res));
       toast.success(res.EM);
+      setIsLoading(false);
       navigate("/");
     }
     if (res && res.EC !== 0) {
       toast.error(res.EM);
+      setIsLoading(false);
     }
   };
 
@@ -75,7 +82,10 @@ const Login = () => {
         </div>
         <span>Forgot password?</span>
         <div>
-          <button onClick={() => handleLogin()}>Login</button>
+          <button disabled={isLoading} onClick={() => handleLogin()}>
+            {isLoading ? <ImSpinner className="loading-icon" /> : ""}
+            <span>Login</span>
+          </button>
         </div>
       </div>
     </div>
