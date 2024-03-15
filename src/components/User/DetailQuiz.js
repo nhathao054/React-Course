@@ -1,18 +1,47 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { getQuizById } from "../../services/apiServices";
-import _ from "lodash";
+import _, { result } from "lodash";
 import "./DetailQuiz.scss";
+import Question from "./Question";
 const DetailQuiz = (props) => {
   const param = useParams();
   const quizId = param.id;
   const location = useLocation();
+  const [data, setData] = useState([]);
+  const [index, setIndex] = useState(0);
 
   useEffect(() => {
     fetchQuestions();
   }, [quizId]);
 
-  console.log(location);
+  const handlePrev = () => {
+    if (index <= 0) return;
+    setIndex(index - 1);
+  };
+  const handleNext = () => {
+    if (data && data.length > index + 1) setIndex(index + 1);
+  };
+
+  const handleCheckBoxProp = (answerId, questionId) => {
+    let dataQuiz = _.cloneDeep(data); // hook doesn't merge state like react class
+    let question = dataQuiz.find((item) => +item.questionId === +questionId);
+    if (question && question.answers) {
+      console.log("q", question);
+      let b = question.answers.map((item) => {
+        if (+item.id === answerId) {
+          item.isSelected = !item.isSelected;
+        }
+        return item;
+      });
+      question.answers = b;
+    }
+    let index = dataQuiz.findIndex((item) => +questionId === +item.questionId);
+    if (index > -1) {
+      setData(dataQuiz);
+    }
+  };
+
   const fetchQuestions = async () => {
     const res = await getQuizById(quizId);
     if (res && res.EC === 0) {
@@ -30,6 +59,7 @@ const DetailQuiz = (props) => {
               image = item.image;
               questionDescription = item.description;
             }
+            item.answers.isSelected = false;
             answers.push(item.answers);
           });
           return {
@@ -40,6 +70,7 @@ const DetailQuiz = (props) => {
           };
         })
         .value();
+      setData(result);
       console.log(result);
     }
   };
@@ -51,20 +82,24 @@ const DetailQuiz = (props) => {
           Quiz{quizId} : {location?.state?.quizTitle}
         </div>
         <hr />
-        <div className="q-body">
-          <img />
-        </div>
+        <div className="q-body"></div>
         <div className="q-content">
-          <div className="question">Question 1: hihi</div>
-          <div className="answers">
-            <div className="a-child">A. adsas</div>
-            <div className="b-child">B. asdfadsf</div>
-            <div className="c-child">C. asdfasd</div>
-          </div>
+          <Question
+            index={index}
+            data={data && data.length > 0 ? data[index] : []}
+            handleCheckBoxProp={handleCheckBoxProp}
+          />
         </div>
         <div className="footer">
-          <button className="btn btn-primary">Prev</button>
-          <button className="btn btn-secondary">Next</button>
+          <button className="btn btn-primary" onClick={() => handlePrev()}>
+            Prev
+          </button>
+          <button className="btn btn-secondary" onClick={() => handleNext()}>
+            Next
+          </button>
+          <button className="btn btn-warning" onClick={() => handleNext()}>
+            Finish
+          </button>
         </div>
       </div>
       <div className="right-container">Right content</div>
