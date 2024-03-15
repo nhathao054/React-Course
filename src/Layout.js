@@ -11,17 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Register from "./components/Auth/Register";
 import ListQuiz from "./components/User/ListQuiz";
 import DetailQuiz from "./components/User/DetailQuiz";
-
-const NotFound = () => {
-  return (
-    <div
-      className="container mt-3 alert alert-danger
-  "
-    >
-      404.Not found data with your current URL
-    </div>
-  );
-};
+import NotFound from "./components/Home/NotFound";
 
 const Layout = (props) => {
   return (
