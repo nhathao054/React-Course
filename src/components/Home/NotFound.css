@@ -6,6 +6,11 @@
   padding: 50px;
   background: #fff;
   font-family: "Arvo", serif;
+  padding: 0;
+  margin: 10px 50px;
+}
+.text {
+  margin-left: 125px;
 }
 
 .page_404 img {

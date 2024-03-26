@@ -7,6 +7,7 @@ import TableQuiz from "./TableQuiz.js";
 import Accordion from "react-bootstrap/Accordion";
 import { getAllQuiz } from "../../../../services/apiServices";
 import ModalDeleteQuiz from "./ModalDeleteQuiz.js";
+import ModalUpdateQuiz from "./ModalUpdateQuiz.js";
 
 const options = [
   { value: "EASY", label: "EASY" },
@@ -20,8 +21,12 @@ const ManageQuiz = () => {
   const [type, setType] = useState("");
   const [image, setImage] = useState("");
   const [data, setData] = useState("");
-  const [dataDelete, setDataDelete] = useState({});
+
   const [showDeleteQuiz, setShowDeleteQuiz] = useState(false);
+  const [showUpdateQuiz, setShowUpdateQuiz] = useState(false);
+
+  const [dataDelete, setDataDelete] = useState({});
+  const [dataUpdate, setDataUpdate] = useState({});
 
   useEffect(() => {
     fetchQuiz();
@@ -58,6 +63,11 @@ const ManageQuiz = () => {
   const handleClickBtnDeleteQuiz = (item) => {
     setShowDeleteQuiz(true);
     setDataDelete(item);
+  };
+
+  const handleClickBtnUpdateQuiz = (item) => {
+    setShowUpdateQuiz(true);
+    setDataUpdate(item);
   };
 
   return (
@@ -138,6 +148,7 @@ const ManageQuiz = () => {
           data={data}
           setShow={setShowDeleteQuiz}
           handleClickBtnDeleteQuiz={handleClickBtnDeleteQuiz}
+          handleClickBtnUpdateQuiz={handleClickBtnUpdateQuiz}
         />
       </div>
       <ModalDeleteQuiz
@@ -145,6 +156,13 @@ const ManageQuiz = () => {
         setShow={setShowDeleteQuiz}
         dataDelete={dataDelete}
         fetchQuiz={fetchQuiz}
+      />
+      <ModalUpdateQuiz
+        show={showUpdateQuiz}
+        setShow={setShowUpdateQuiz}
+        dataUpdate={dataUpdate}
+        fetchQuiz={fetchQuiz}
+        setDataUpdate={setDataUpdate}
       />
     </div>
   );

@@ -28,7 +28,7 @@ const TableQuiz = (props) => {
                       <td>
                         <button
                           className="btn btn-warning mx-3"
-                          // onClick={() => props.handleClickBtnUpdateUser(item)}
+                          onClick={() => props.handleClickBtnUpdateQuiz(item)}
                         >
                           Update
                         </button>
