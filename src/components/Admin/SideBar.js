@@ -32,6 +32,7 @@ const SideBar = (props) => {
         toggled={toggled}
         breakPoint="md"
         onToggle={handleToggleSidebar}
+        className="custom-sidebar"
       >
         <SidebarHeader>
           <div
@@ -84,10 +85,14 @@ const SideBar = (props) => {
             }}
           >
             <a
-              href="https://github.com/azouaoui-med/react-pro-sidebar"
+              href="https://github.com/nhathao230803"
               target="_blank"
-              className="sidebar-btn"
+              className="sidebar-btn mx-3"
               rel="noopener noreferrer"
+              style={{
+                textDecoration: "none",
+                color: "white",
+              }}
             >
               <FaGithub />
               <span
@@ -95,9 +100,10 @@ const SideBar = (props) => {
                   whiteSpace: "nowrap",
                   textOverflow: "ellipsis",
                   overflow: "hidden",
+                  marginLeft: "5px",
                 }}
               >
-                viewSource
+                ViewSource
               </span>
             </a>
           </div>
