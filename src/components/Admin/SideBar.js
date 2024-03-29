@@ -20,10 +20,11 @@ import {
 import sidebarBg from "../../assets/bg2.jpg";
 import { DiReact } from "react-icons/di";
 import { MdDashboard } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SideBar = (props) => {
   const { image, collapsed, toggled, handleToggleSidebar } = props;
+  const naviage = useNavigate();
   return (
     <>
       <ProSidebar
@@ -47,8 +48,15 @@ const SideBar = (props) => {
               whiteSpace: "nowrap",
             }}
           >
-            <DiReact size={"3em"} color="#f8526f" />
-            Haven
+            <span
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                naviage("/");
+              }}
+            >
+              <DiReact size={"3em"} color="#f8526f" />
+              Haven
+            </span>
           </div>
         </SidebarHeader>
 
@@ -71,7 +79,7 @@ const SideBar = (props) => {
               </MenuItem>
               <MenuItem>
                 Question Management
-                <Link to={"/admins/manage-question"} />
+                <Link to={"/admins/manage-questions"} />
               </MenuItem>
             </SubMenu>
           </Menu>

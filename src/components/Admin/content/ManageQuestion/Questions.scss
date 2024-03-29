@@ -1,0 +1,88 @@
+.question-container {
+  padding: 15px;
+
+  .question-title {
+    margin-bottom: 15px;
+    font-weight: 600;
+    font-size: 20px;
+  }
+
+  .question-content {
+    display: flex;
+    gap: 25px;
+    // align-items: center;
+    .description {
+      width: 50%;
+    }
+
+    .group-upload {
+      margin-top: 5px;
+      .label-upload {
+        font-size: 25px;
+        align-items: center;
+        margin-right: 10px;
+        color: #c98aea;
+        cursor: pointer;
+        &:hover {
+          color: #bc45fb;
+        }
+      }
+    }
+
+    .btn-group {
+      margin: 15px 10px;
+      .icon-add {
+        font-size: 20px;
+        color: rgb(45, 233, 45);
+        cursor: pointer;
+        margin-right: 10px;
+
+        &:hover {
+          color: rgb(27, 208, 27);
+        }
+      }
+      .icon-remove {
+        font-size: 20px;
+        color: red;
+        cursor: pointer;
+
+        &:hover {
+          color: rgb(223, 5, 5);
+        }
+      }
+    }
+  }
+
+  .answers-content {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    .answers-des {
+      width: 48%;
+    }
+
+    .btn-group {
+      margin: 15px 10px;
+      .icon-add {
+        font-size: 20px;
+        color: rgb(45, 233, 45);
+        cursor: pointer;
+        margin-right: 10px;
+
+        &:hover {
+          color: rgb(27, 208, 27);
+        }
+      }
+      .icon-remove {
+        font-size: 20px;
+        color: red;
+        cursor: pointer;
+
+        &:hover {
+          color: rgb(223, 5, 5);
+        }
+      }
+    }
+  }
+}
