@@ -3,7 +3,7 @@ const TableUser = (props) => {
   const { listUsers } = props;
   return (
     <>
-      <table className="table table-striped table-hover table-bordered">
+      <table className="table table-striped table-hover table-bordered ">
         <thead>
           <tr>
             <th scope="col">No.</th>

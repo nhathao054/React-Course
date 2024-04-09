@@ -7,7 +7,7 @@ import Row from "react-bootstrap/Row";
 import { FaPlusCircle } from "react-icons/fa";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { postCreateUser } from "../../../services/apiServices";
+import { postCreateUser } from "../../../../services/apiServices";
 
 const ModalCreateUser = (props) => {
   const { show, setShow } = props;

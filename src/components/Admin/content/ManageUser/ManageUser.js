@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import {
   getListUser,
   getListUserPatinate,
-} from "../../../services/apiServices";
+} from "../../../../services/apiServices";
 import ModalUpdateUser from "./ModalUpdateUser";
 import ModalViewUser from "./ModalViewUser";
 import ModalDeleteUser from "./ModalDeleteUser";

@@ -20,10 +20,11 @@ import {
 import sidebarBg from "../../assets/bg2.jpg";
 import { DiReact } from "react-icons/di";
 import { MdDashboard } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SideBar = (props) => {
   const { image, collapsed, toggled, handleToggleSidebar } = props;
+  const naviage = useNavigate();
   return (
     <>
       <ProSidebar
@@ -32,6 +33,7 @@ const SideBar = (props) => {
         toggled={toggled}
         breakPoint="md"
         onToggle={handleToggleSidebar}
+        className="custom-sidebar"
       >
         <SidebarHeader>
           <div
@@ -46,8 +48,15 @@ const SideBar = (props) => {
               whiteSpace: "nowrap",
             }}
           >
-            <DiReact size={"3em"} color="#f8526f" />
-            Haven
+            <span
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                naviage("/");
+              }}
+            >
+              <DiReact size={"3em"} color="#f8526f" />
+              Haven
+            </span>
           </div>
         </SidebarHeader>
 
@@ -66,11 +75,11 @@ const SideBar = (props) => {
               </MenuItem>
               <MenuItem>
                 Quiz Management
-                <Link to={"/admins/manage-quiz"} />
+                <Link to={"/admins/manage-quizzes"} />
               </MenuItem>
               <MenuItem>
                 Question Management
-                <Link to={"/admins/manage-question"} />
+                <Link to={"/admins/manage-questions"} />
               </MenuItem>
             </SubMenu>
           </Menu>
@@ -84,10 +93,14 @@ const SideBar = (props) => {
             }}
           >
             <a
-              href="https://github.com/azouaoui-med/react-pro-sidebar"
+              href="https://github.com/nhathao230803"
               target="_blank"
-              className="sidebar-btn"
+              className="sidebar-btn mx-3"
               rel="noopener noreferrer"
+              style={{
+                textDecoration: "none",
+                color: "white",
+              }}
             >
               <FaGithub />
               <span
@@ -95,9 +108,10 @@ const SideBar = (props) => {
                   whiteSpace: "nowrap",
                   textOverflow: "ellipsis",
                   overflow: "hidden",
+                  marginLeft: "5px",
                 }}
               >
-                viewSource
+                ViewSource
               </span>
             </a>
           </div>

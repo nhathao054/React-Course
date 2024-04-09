@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import User from "./components/User/User";
 import Admin from "./components/Admin/Admin";
-import DashBoard from "./components/Admin/content/DashBoard";
-import ManageUser from "./components/Admin/content/ManageUser";
+import DashBoard from "./components/Admin/content/ManageUser/DashBoard";
+import ManageUser from "./components/Admin/content/ManageUser/ManageUser";
 import App from "./App";
 import HomePage from "./components/Home/HomePage";
 import Login from "./components/Auth/Login";
@@ -11,17 +11,9 @@ import "react-toastify/dist/ReactToastify.css";
 import Register from "./components/Auth/Register";
 import ListQuiz from "./components/User/ListQuiz";
 import DetailQuiz from "./components/User/DetailQuiz";
-
-const NotFound = () => {
-  return (
-    <div
-      className="container mt-3 alert alert-danger
-  "
-    >
-      404.Not found data with your current URL
-    </div>
-  );
-};
+import NotFound from "./components/Home/NotFound";
+import ManageQuiz from "./components/Admin/content/ManageQuiz/ManageQuiz";
+import Questions from "./components/Admin/content/ManageQuestion/Questions";
 
 const Layout = (props) => {
   return (
@@ -36,6 +28,8 @@ const Layout = (props) => {
         <Route path="admins" element={<Admin />}>
           <Route index element={<DashBoard />} />
           <Route path="manage-user" element={<ManageUser />} />
+          <Route path="manage-quizzes" element={<ManageQuiz />} />
+          <Route path="manage-questions" element={<Questions />} />
         </Route>
 
         <Route path="/login" element={<Login />} />

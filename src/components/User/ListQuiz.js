@@ -39,7 +39,9 @@ const ListQuiz = () => {
                 <Button
                   variant="primary"
                   onClick={() => {
-                    navigate(`/quiz/${quiz.id}`);
+                    navigate(`/quiz/${quiz.id}`, {
+                      state: { quizTitle: quiz.description },
+                    });
                   }}
                 >
                   Do quiz now
