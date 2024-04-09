@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import Select from "react-select";
-
 import Lightbox from "react-awesome-lightbox";
-
+import { toast } from "react-toastify";
 //===================Icon=========================================
 import { BsPatchPlusFill } from "react-icons/bs";
 import { BsFillPatchMinusFill } from "react-icons/bs";
@@ -17,7 +16,7 @@ import {
 } from "../../../../services/apiServices";
 
 import { v4 as uuidv4 } from "uuid";
-import _, { values } from "lodash";
+import _, { forEach, values } from "lodash";
 
 import "./Questions.scss";
 import { Value } from "sass";
@@ -32,7 +31,8 @@ const Questions = (props) => {
   const [listQuiz, setListQuiz] = useState("");
   const [isPreviewImage, setIsPreviewImage] = useState(false);
   const [selectedQuiz, setSelectedQuiz] = useState("");
-  const [questions, setQuestion] = useState([
+
+  const initQuestion = [
     {
       id: uuidv4(),
       description: "question 1",
@@ -40,7 +40,8 @@ const Questions = (props) => {
       imageName: "",
       answers: [{ id: uuidv4(), description: "answer 1", isCorrect: false }],
     },
-  ]);
+  ];
+  const [questions, setQuestion] = useState(initQuestion);
   const [previewImage, setPreviewImage] = useState({
     url: "",
     title: "",
@@ -167,27 +168,63 @@ const Questions = (props) => {
   };
 
   const SubmitAnswer = async () => {
-    console.log(questions, selectedQuiz);
+    //validate
+    if (_.isEmpty(selectedQuiz)) {
+      toast.error("Please choose the quiz");
+      return;
+    }
+    let isValidAnswer = true;
+    let indexA,
+      indexQ = 0;
+    for (let i = 0; i < questions.length; i++) {
+      for (let j = 0; j < questions[i].answers.length; j++) {
+        if (!questions[i].answers[j].description) {
+          isValidAnswer = false;
+          indexA = j;
+          break;
+        }
+        indexQ = i;
+        if (isValidAnswer === false) break;
+      }
+    }
+
+    if (isValidAnswer === false) {
+      toast.error(`Not emty Answer ${indexA + 1} at Question ${indexQ + 1}`);
+      return;
+    }
+
+    let isValidQuestion = true;
+    let indexQ1 = 0;
+    for (let i = 0; i < questions.length; i++) {
+      if (!questions[i].description) {
+        isValidQuestion = false;
+        indexQ1 = i;
+        break;
+      }
+    }
+
+    if (isValidQuestion === false) {
+      toast.error(`Not emty description at question ${indexQ1 + 1}`);
+      return;
+    }
+
     // submitQuestion
-    await Promise.all(
-      questions.map(async (question) => {
-        const q = await postCreateNewQuestionForQuiz(
-          +selectedQuiz.value,
-          question.description,
-          question.imageFile
+    for (const question of questions) {
+      const q = await postCreateNewQuestionForQuiz(
+        +selectedQuiz.value,
+        question.description,
+        question.imageFile
+      );
+      for (const answer of question.answers) {
+        await postCreateNewAnswerForQuestion(
+          answer.description,
+          q.DT.id,
+          answer.isCorrect
         );
-        //SubmitAnswer
-        await Promise.all(
-          question.answers.map(async (answer) => {
-            await postCreateNewAnswerForQuestion(
-              answer.description,
-              q.DT.id,
-              answer.isCorrect
-            );
-          })
-        );
-      })
-    );
+      }
+      toast.success("Create Question successfully");
+      setQuestion(initQuestion);
+    }
   };
 
   //===================================================================================

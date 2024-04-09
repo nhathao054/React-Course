@@ -136,21 +136,35 @@ const ManageQuiz = () => {
                   Save
                 </button>
               </fieldset>
+
+              <div className="list-detail mt-3">
+                <div className="my-3 ">
+                  <h4>List Quiz:</h4>
+                </div>
+                <TableQuiz
+                  data={data}
+                  setShow={setShowDeleteQuiz}
+                  handleClickBtnDeleteQuiz={handleClickBtnDeleteQuiz}
+                  handleClickBtnUpdateQuiz={handleClickBtnUpdateQuiz}
+                />
+              </div>
             </Accordion.Body>
+          </Accordion.Item>
+          <Accordion.Item eventKey="1">
+            <Accordion.Header>
+              <div className="title">Update Q/A Quizzes</div>
+            </Accordion.Header>
+            <Accordion.Body>11111111</Accordion.Body>
+          </Accordion.Item>
+          <Accordion.Item eventKey="2">
+            <Accordion.Header>
+              <div className="title">Assign to User</div>
+            </Accordion.Header>
+            <Accordion.Body>222222222</Accordion.Body>
           </Accordion.Item>
         </Accordion>
       </div>
-      <div className="list-detail mt-3">
-        <div className="my-3 ">
-          <h4>List Quiz:</h4>
-        </div>
-        <TableQuiz
-          data={data}
-          setShow={setShowDeleteQuiz}
-          handleClickBtnDeleteQuiz={handleClickBtnDeleteQuiz}
-          handleClickBtnUpdateQuiz={handleClickBtnUpdateQuiz}
-        />
-      </div>
+
       <ModalDeleteQuiz
         show={showDeleteQuiz}
         setShow={setShowDeleteQuiz}
