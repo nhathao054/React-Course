@@ -14,7 +14,9 @@
     .description {
       width: 50%;
     }
-
+    .input {
+      z-index: -100;
+    }
     .group-upload {
       margin-top: 5px;
       .label-upload {
